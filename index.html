@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLX Agency | Business Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #111111;
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --white: #FFFFFF;
+            --gray: #A1A1AA;
+            --border: #27272A;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--white); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* FLOATING PARTICLES */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--purple);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle 20s infinite ease-in-out;
+        }
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 25s; }
+        .particle:nth-child(2) { left: 20%; top: 80%; animation-delay: 2s; animation-duration: 20s; width: 4px; height: 4px; }
+        .particle:nth-child(3) { left: 30%; top: 40%; animation-delay: 4s; animation-duration: 22s; }
+        .particle:nth-child(4) { left: 40%; top: 60%; animation-delay: 1s; animation-duration: 18s; width: 8px; height: 8px; opacity: 0.2; }
+        .particle:nth-child(5) { left: 50%; top: 30%; animation-delay: 3s; animation-duration: 24s; }
+        .particle:nth-child(6) { left: 60%; top: 70%; animation-delay: 5s; animation-duration: 19s; width: 5px; height: 5px; }
+        .particle:nth-child(7) { left: 70%; top: 50%; animation-delay: 2s; animation-duration: 21s; }
+        .particle:nth-child(8) { left: 80%; top: 25%; animation-delay: 4s; animation-duration: 23s; width: 7px; height: 7px; opacity: 0.25; }
+        .particle:nth-child(9) { left: 85%; top: 85%; animation-delay: 1s; animation-duration: 26s; width: 4px; height: 4px; }
+        .particle:nth-child(10) { left: 15%; top: 55%; animation-delay: 3s; animation-duration: 17s; }
+        .particle:nth-child(11) { left: 45%; top: 15%; animation-delay: 0s; animation-duration: 28s; width: 5px; height: 5px; }
+        .particle:nth-child(12) { left: 75%; top: 90%; animation-delay: 2s; animation-duration: 22s; opacity: 0.35; }
+        
+        @keyframes float-particle {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            25% { transform: translate(30px, -50px) scale(1.2); opacity: 0.5; }
+            50% { transform: translate(-20px, -100px) scale(0.8); opacity: 0.2; }
+            75% { transform: translate(40px, -50px) scale(1.1); opacity: 0.4; }
+        }
+        
+        /* BUTTONS */
+        .btn { display: inline-block; padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 15px; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--purple); color: white; }
+        .btn-primary:hover { background: #6d28d9; transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: white; border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--purple); }
+
+        /* NAV */
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+        .logo-icon { width: 36px; height: 36px; background: var(--purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--gray); font-size: 15px; transition: color 0.3s; }
+        .nav-links a:hover { color: white; }
+        
+        /* MOBILE MENU BUTTON */
+        .menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 10px; }
+        .menu-btn span { width: 24px; height: 2px; background: white; }
+
+        /* LANGUAGE SWITCHER */
+        .lang-switch { display: flex; align-items: center; gap: 8px; margin-left: 20px; }
+        .lang-switch a { color: var(--gray); font-size: 14px; font-weight: 500; transition: color 0.3s; }
+        .lang-switch a:hover, .lang-switch a.active { color: white; }
+        .lang-switch span { color: var(--border); }
+        
+        /* MOBILE MENU */
+        .mobile-menu { display: none; position: fixed; top: 69px; left: 0; right: 0; background: var(--bg-primary); border-bottom: 1px solid var(--border); padding: 20px; z-index: 999; }
+        .mobile-menu.open { display: block; }
+        .mobile-menu a { display: block; padding: 15px 0; color: var(--gray); font-size: 18px; border-bottom: 1px solid var(--border); }
+        .mobile-menu a:last-child { border-bottom: none; color: var(--purple-light); }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; text-align: center; background: linear-gradient(135deg, rgba(124,58,237,0.1) 0%, transparent 50%); }
+        .hero h1 { font-size: clamp(36px, 6vw, 64px); margin-bottom: 24px; }
+        .hero .highlight { color: var(--purple-light); }
+        .hero p { font-size: 18px; color: var(--gray); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* SECTIONS */
+        section { padding: 100px 0; }
+        .section-tag { display: inline-block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; color: var(--purple-light); margin-bottom: 16px; }
+        .section-title { font-size: clamp(28px, 4vw, 44px); margin-bottom: 20px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+
+        /* PROBLEM SECTION */
+        .problem { background: var(--bg-primary); }
+        .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .problem-card { background: var(--bg-secondary); border-left: 4px solid var(--purple); border-radius: 12px; padding: 32px; transition: all 0.3s ease; }
+        .problem-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(124, 58, 237, 0.2); border-color: var(--purple-light); }
+        .problem-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .problem-card p { color: var(--gray); font-size: 14px; }
+
+        /* SOLUTION SECTION */
+        .solution { background: var(--bg-secondary); }
+        .solution-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .solution-item { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s; }
+        .solution-item:hover { border-color: var(--purple); transform: translateY(-4px); }
+        .solution-before { font-size: 14px; color: var(--gray); margin-bottom: 12px; }
+        .solution-after { font-size: 17px; font-weight: 600; }
+        .solution-arrow { color: var(--purple-light); margin-right: 8px; }
+
+        /* SERVICES SECTION */
+        .services { background: var(--bg-primary); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+        .service-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center; transition: all 0.3s; }
+        .service-card:hover { border-color: var(--purple); transform: translateY(-4px); }
+        .service-icon { width: 56px; height: 56px; background: rgba(124,58,237,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .service-icon svg { width: 28px; height: 28px; color: var(--purple-light); }
+        .service-card h3 { font-size: 18px; margin-bottom: 12px; }
+        .service-card p { color: var(--gray); font-size: 14px; }
+
+        /* PROCESS SECTION */
+        .process { background: var(--bg-secondary); }
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .process-step { text-align: center; }
+        .process-number { font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 700; color: var(--purple); margin-bottom: 16px; }
+        .process-icon { width: 64px; height: 64px; background: var(--bg-primary); border: 2px solid var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; transition: all 0.3s; }
+        .process-step:hover .process-icon { background: rgba(124,58,237,0.1); transform: scale(1.1); }
+        .process-icon svg { width: 28px; height: 28px; color: var(--purple-light); }
+        .process-step h3 { font-size: 18px; margin-bottom: 12px; }
+        .process-step p { color: var(--gray); font-size: 14px; }
+
+        /* CASES SECTION */
+        .cases { background: var(--bg-primary); }
+        .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+        .case-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 16px; padding: 32px; position: relative; overflow: hidden; }
+        .case-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+        .case-card h3 { font-size: 20px; margin-bottom: 24px; }
+        .case-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); margin-bottom: 8px; }
+        .case-label.result { color: var(--purple-light); }
+        .case-text { font-size: 14px; color: var(--gray); margin-bottom: 20px; line-height: 1.6; }
+        .case-result { font-size: 15px; font-weight: 600; color: white; }
+
+        /* FOUNDER SECTION */
+        .founder { background: var(--bg-primary); text-align: center; padding: 120px 0; }
+        .founder-image { width: 180px; height: 180px; border-radius: 50%; margin: 0 auto 28px; border: 3px solid var(--purple); padding: 4px; overflow: hidden; }
+        .founder-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; border-radius: 50%; }
+        .founder h3 { font-size: 32px; margin-bottom: 8px; }
+        .founder-title { color: var(--purple-light); font-size: 16px; margin-bottom: 24px; }
+        .founder-quote { font-size: 18px; color: var(--gray); max-width: 700px; margin: 0 auto 32px; font-style: italic; line-height: 1.7; }
+        .founder-link { display: inline-flex; align-items: center; gap: 8px; color: var(--purple-light); font-weight: 500; }
+        .founder-link:hover { text-decoration: underline; }
+
+        /* TESTIMONIALS */
+        .testimonials { background: var(--bg-secondary); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .testimonial-card { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; cursor: pointer; }
+        .testimonial-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--purple); box-shadow: 0 20px 50px rgba(124, 58, 237, 0.3); }
+        .testimonial-stars { color: var(--purple-light); font-size: 18px; margin-bottom: 16px; letter-spacing: 2px; }
+        .testimonial-text { font-size: 15px; color: var(--gray); line-height: 1.7; margin-bottom: 24px; }
+        .testimonial-author { display: flex; align-items: center; gap: 14px; }
+        .author-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--purple-light)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; }
+        .author-name { font-weight: 600; font-size: 15px; }
+        .author-company { font-size: 13px; color: var(--gray); }
+        .testimonial-link { margin-top: 16px; }
+        .testimonial-link a { color: var(--purple-light); font-size: 13px; }
+
+        /* FAQ SECTION */
+        .faq { background: var(--bg-primary); }
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-question { width: 100%; background: none; border: none; padding: 24px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; text-align: left; color: white; }
+        .faq-question h4 { font-size: 18px; font-weight: 600; padding-right: 16px; flex: 1; }
+        .faq-question svg { width: 24px; height: 24px; color: var(--purple-light); transition: transform 0.3s; flex-shrink: 0; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-answer p { font-size: 16px; color: var(--gray); line-height: 1.7; padding-bottom: 24px; }
+        .faq-item.active .faq-question svg { transform: rotate(180deg); }
+        .faq-item.active .faq-answer { max-height: 300px; }
+
+        /* CTA SECTION */
+        .cta { background: var(--bg-secondary); text-align: center; padding: 120px 0; }
+        .cta h2 { font-size: clamp(32px, 4vw, 48px); margin-bottom: 16px; }
+        .cta p { font-size: 18px; color: var(--gray); margin-bottom: 32px; }
+
+        /* FOOTER */
+        .footer { background: var(--bg-primary); border-top: 1px solid var(--border); padding: 48px 0 32px; }
+        .footer-content { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; margin-bottom: 32px; }
+        .footer-contact { font-size: 14px; color: var(--gray); margin-top: 12px; }
+        .footer-contact a:hover { color: var(--purple-light); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { font-size: 14px; color: var(--gray); }
+        .footer-links a:hover { color: var(--purple-light); }
+        .footer-bottom { text-align: center; padding-top: 32px; border-top: 1px solid var(--border); }
+        .footer-bottom p { font-size: 13px; color: var(--gray); }
+
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
+            .nav-links, .nav .btn { display: none; }
+            .menu-btn { display: flex; }
+            .lang-switch { margin-left: auto; margin-right: 16px; }
+        }
+        @media (max-width: 768px) {
+            section { padding: 60px 0; }
+            .hero { padding: 100px 0 60px; min-height: auto; }
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 16px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-buttons .btn { width: 100%; max-width: 280px; }
+            .founder-image { width: 150px; height: 150px; }
+            .founder-quote { font-size: 16px; padding: 0 10px; }
+            .faq-question h4 { font-size: 16px; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-links { flex-direction: column; gap: 12px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FLOATING PARTICLES -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                VLX Agency
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <a href="https://calendly.com/norolabs83/30min" target="_blank" class="btn btn-primary">Let's Talk</a>
+            <div class="lang-switch">
+                <a href="index.html" class="active">EN</a>
+                <span>|</span>
+                <a href="hr.html">HR</a>
+            </div>
+            <button class="menu-btn" id="menuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://calendly.com/norolabs83/30min" target="_blank">Let's Talk →</a>
+        <div style="display: flex; gap: 16px; padding-top: 16px; border-top: 1px solid var(--border); margin-top: 8px;">
+            <a href="index.html" style="color: white;">EN</a>
+            <a href="hr.html">HR</a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Automate the Boring Stuff.<br><span class="highlight">Focus on What Matters.</span></h1>
+                <p>We build custom automation systems that save business owners 10-20 hours every week, without the tech headaches.</p>
+                <div class="hero-buttons">
+                    <a href="https://calendly.com/norolabs83/30min" target="_blank" class="btn btn-primary">Book Free Discovery Call</a>
+                    <a href="#work" class="btn btn-secondary">See Our Work</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION -->
+    <section class="problem" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">The Problem</span>
+                <h2 class="section-title">You're Losing Money Every Day</h2>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>20+ Hours Per Week Wasted</h3>
+                    <p>Manually moving data between apps, sending the same emails, updating spreadsheets. Tasks that could run themselves.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Customers Waiting Too Long</h3>
+                    <p>Every hour a lead waits for a response, the chance of conversion drops. Manual follow-ups can't keep pace.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Opportunities Slipping Away</h3>
+                    <p>Without automated tracking, leads go cold, invoices get forgotten, and sales opportunities disappear unnoticed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION SECTION -->
+    <section class="solution">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">The Solution</span>
+                <h2 class="section-title">Automation That Actually Makes Sense</h2>
+            </div>
+            <div class="solution-grid">
+                <div class="solution-item">
+                    <p class="solution-before">Instead of manually posting content...</p>
+                    <p class="solution-after"><span class="solution-arrow">→</span> Your system automatically publishes to Instagram, LinkedIn, and Twitter</p>
+                </div>
+                <div class="solution-item">
+                    <p class="solution-before">Instead of copy-pasting customer data...</p>
+                    <p class="solution-after"><span class="solution-arrow">→</span> Info flows automatically from forms to your CRM</p>
+                </div>
+                <div class="solution-item">
+                    <p class="solution-before">Instead of sending follow-ups by hand...</p>
+                    <p class="solution-after"><span class="solution-arrow">→</span> Your leads get instant responses and scheduled messages</p>
+                </div>
+                <div class="solution-item">
+                    <p class="solution-before">Instead of checking 5 tools for updates...</p>
+                    <p class="solution-after"><span class="solution-arrow">→</span> Everything appears in one dashboard</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What We Do</span>
+                <h2 class="section-title">Our Services</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                    </div>
+                    <h3>Workflow Automation</h3>
+                    <p>Turn repetitive tasks into automated workflows that run 24/7</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+                    </div>
+                    <h3>App Connections</h3>
+                    <p>Connect your existing tools so they work together seamlessly</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M16 14H8a4 4 0 0 0-4 4v2h16v-2a4 4 0 0 0-4-4z"/></svg>
+                    </div>
+                    <h3>AI-Powered Systems</h3>
+                    <p>Smart automation that learns and adapts to your business</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg>
+                    </div>
+                    <h3>Reports & Dashboards</h3>
+                    <p>Real-time insights delivered automatically to your inbox</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section class="process">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Process</span>
+                <h2 class="section-title">How We Work</h2>
+            </div>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="process-number">01</div>
+                    <div class="process-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h3>Discovery Call (Free)</h3>
+                    <p>We listen to your biggest time-wasters and map your current process</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-number">02</div>
+                    <div class="process-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                    <h3>Custom Build</h3>
+                    <p>We create your automation system and connect it to your existing tools</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-number">03</div>
+                    <div class="process-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <h3>Launch & Support</h3>
+                    <p>You get training, documentation, and we monitor everything for 30 days</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section class="cases" id="work">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Case Studies</span>
+                <h2 class="section-title">Real Results From Real Businesses</h2>
+            </div>
+            <div class="cases-grid">
+                <div class="case-card">
+                    <h3>From 30 Minutes to 3 Minutes Per Document</h3>
+                    <p class="case-label">THE PROBLEM</p>
+                    <p class="case-text">EU policy firm manually processing Parliament documents: extracting text, writing summaries, assessing relevance for 20+ organizations</p>
+                    <p class="case-label">WHAT WE BUILT</p>
+                    <p class="case-text">Automated pipeline: document detection → AI summarization → relevance scoring → personalized email generation</p>
+                    <p class="case-label result">THE RESULT</p>
+                    <p class="case-result">90% time reduction, 500+ documents processed monthly</p>
+                </div>
+                <div class="case-card">
+                    <h3>YouTube Shorts Channel That Runs Itself</h3>
+                    <p class="case-label">THE PROBLEM</p>
+                    <p class="case-text">Content creator wanted daily YouTube Shorts but lacked time for scripts, voiceovers, editing, and uploading</p>
+                    <p class="case-label">WHAT WE BUILT</p>
+                    <p class="case-text">9-stage automation: AI generates content → voiceover synthesis → video assembly → auto-upload with SEO metadata</p>
+                    <p class="case-label result">THE RESULT</p>
+                    <p class="case-result">2-3 videos published daily, zero manual work</p>
+                </div>
+                <div class="case-card">
+                    <h3>20 Instagram Funnels Running 24/7</h3>
+                    <p class="case-label">THE PROBLEM</p>
+                    <p class="case-text">E-commerce brand needed multi-profile content strategy but couldn't manually create 100+ daily videos</p>
+                    <p class="case-label">WHAT WE BUILT</p>
+                    <p class="case-text">Automated content factory generating videos for each profile with character-specific branding and automated posting</p>
+                    <p class="case-label result">THE RESULT</p>
+                    <p class="case-result">20-100+ videos daily across 20 profiles, zero manual posting</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUNDER -->
+    <section class="founder">
+        <div class="container">
+            <span class="section-tag">Founder</span>
+            <div class="founder-image">
+                <img src="noa-photo.jpg" alt="Noa Bošnjak">
+            </div>
+            <h3>Noa Bošnjak</h3>
+            <p class="founder-title">Founder of VLX Agency</p>
+            <p class="founder-quote">"I started VLX because I was tired of seeing businesses waste money on repetitive work. After building 50+ automation systems, I learned one thing: the best automation is the one you forget exists, because it just works."</p>
+            <a href="https://www.linkedin.com/in/noa-b-722a0a396/" target="_blank" class="founder-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                Connect on LinkedIn
+            </a>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Testimonials</span>
+                <h2 class="section-title">What Clients Say</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Noa showed incredible initiative and helped us very quickly with our update. He first offered to answer our questions, without expecting anything in return, which truly speaks to his character and professionalism."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">IH</div>
+                        <div>
+                            <div class="author-name">Imran Hamid</div>
+                            <div class="author-company">StackedDigital</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-link"><a href="https://www.upwork.com/freelancers/~019381f883ba267a05" target="_blank">See on Upwork →</a></div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Noa was fantastic to work with. Professional, quick to respond, and delivered excellent results. Highly recommend working with him!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AA</div>
+                        <div>
+                            <div class="author-name">Abdullah Alsaldi</div>
+                            <div class="author-company">sawi.me</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-link"><a href="https://www.upwork.com/freelancers/~019381f883ba267a05" target="_blank">See on Upwork →</a></div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Noa delivered an excellent n8n workflow. Very responsive and went beyond to ensure everything worked perfectly. Will definitely hire again!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">TV</div>
+                        <div>
+                            <div class="author-name">Timmy van Gulik</div>
+                            <div class="author-company">handsofluxury.nl</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-link"><a href="https://www.upwork.com/freelancers/~019381f883ba267a05" target="_blank">See on Upwork →</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">FAQ</span>
+                <h2 class="section-title">Common Questions</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>How long does it take to build an automation system?</h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Most projects take 1-3 weeks depending on complexity. Simple automations can be done in a few days, while complex systems with multiple integrations may take longer.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>Do I need technical knowledge?</h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Not at all! We handle all the technical work. You just need to tell us what problems you want solved, and we'll build the solution.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>What tools do you work with?</h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We can connect virtually any app that has an API: Google Sheets, CRMs, email platforms, social media, payment processors, and hundreds more.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>What if something breaks?</h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>All our builds include 30 days of monitoring and support. After that, we offer maintenance packages or can train your team to handle basic issues.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>How much does it cost?</h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Pricing depends on what needs to be automated and how complex the system is. Every business is different, so we discuss specifics on the discovery call and provide a custom quote based on your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Save Time?</h2>
+            <p>Book a free 30-minute call. We'll map out your biggest time-wasters and show you what's possible.</p>
+            <a href="https://calendly.com/norolabs83/30min" target="_blank" class="btn btn-primary">Book Free Discovery Call</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="#" class="logo">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        </div>
+                        VLX Agency
+                    </a>
+                    <div class="footer-contact">
+                        <a href="mailto:noa@vlxagency.com">noa@vlxagency.com</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 VLX Agency • Based in Croatia, Working Globally</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Mobile menu
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        });
+
+        // Close mobile menu when clicking links
+        document.querySelectorAll('.mobile-menu a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.remove('open');
+            });
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var item = this.parentElement;
+                var wasActive = item.classList.contains('active');
+                
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(function(faq) {
+                    faq.classList.remove('active');
+                });
+                
+                // Open clicked if wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
